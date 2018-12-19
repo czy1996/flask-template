@@ -3,6 +3,6 @@ name: default
 
 steps:
   name: test
-  image: python:3.6.7-alpine3.8
-  commands:
-    - python3 a.py
+    image: python:3.6.7-alpine3.8
+    commands:
+      - python3 a.py
