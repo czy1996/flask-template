@@ -2,7 +2,9 @@ kind: pipeline
 name: default
 
 steps:
-- name: test
-  image: python:3.6.7-alpine3.8
-  commands:
-    - python3 a.py
+- name: build
+  image: plugins/docker
+  settings:
+    repo: hello-world
+    tags: latest
+    dry_run: true
