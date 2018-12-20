@@ -9,6 +9,7 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    DB = 'dev db'
 
 
 class TestingConfig(Config):
