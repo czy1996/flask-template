@@ -6,5 +6,4 @@ steps:
   image: python:3.6.7-alpine3.8
   commands:
     - pip install -r requirements.txt
-    - python3 test/test.py
-    - python3 test/conftest.py
+    - python3 -m pytest
