@@ -1,9 +1,9 @@
 import os
 
 from . import config
+from .models import db
 
-
-from flask import Flask
+from flask import Flask, render_template
 
 
 def create_app():
@@ -17,9 +17,11 @@ def create_app():
     if app_env:
         app.config.from_object(config_object.get(app_env, 'config.Config'))
 
+    db.init_app(app)
+
     @app.route('/')
     def hello_world():
-        return 'Hello World from container! {} {}'.format(app_env, app.config.get('DB'))
+        return render_template('index.html')
 
     return app
 

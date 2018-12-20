@@ -9,3 +9,13 @@ services:
     # docker-compose 的配置中才支持相对路径的挂载
     volumes:
       - .:/code
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:4-xenial
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
