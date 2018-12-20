@@ -3,9 +3,15 @@
 
 flask 项目模板，使用docker compose
 
+## Todo
+
+- [x] 配置文件支持
+- [ ] 数据库及其配置文件
+
 ## Features
 
 - docker-compose
 - Drone CI
 
 ## 配置步骤
+
