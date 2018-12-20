@@ -1,11 +1,13 @@
 import pytest
 
-from app import app
+from app import create_app
 
 
 @pytest.fixture
-def client():
+def app():
+    yield create_app()
+
+
+@pytest.fixture
+def client(app):
     yield app.test_client()
-
-
-
