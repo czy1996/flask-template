@@ -1,7 +1,7 @@
 import os
 
 from . import config
-from .models import db
+from .models import db, Todo
 
 from flask import Flask, render_template
 
@@ -21,7 +21,7 @@ def create_app():
 
     @app.route('/')
     def hello_world():
-        return render_template('index.html')
+        return render_template('index.html', todos=Todo.objects)
 
     return app
 

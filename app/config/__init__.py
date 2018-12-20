@@ -9,7 +9,11 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    DB = 'dev db'
+    MONGODB_SETTINGS = {
+        'db': 'Todo',
+        'host': 'mongodb',
+        'port': 27017
+    }
 
 
 class TestingConfig(Config):

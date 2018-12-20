@@ -6,5 +6,9 @@
 </head>
 <body>
     Hello World from container!
+    {% for todo in todos %}
+        <div>{{ todo.title }}</div>
+    {% endfor %}
+
 </body>
 </html>

@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  pyweb:
+    build: .
+    ports:
+      - "9000:5000"
+    # volumes 参数把当前目录挂载到容器的 /code
+    # docker-compose 的配置中才支持相对路径的挂载
+    volumes:
+      - .:/code
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:4-xenial
+
+    # 开发期间开放端口方便调试
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data
+
+volumes:
+  mongo-data:
