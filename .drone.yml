@@ -7,3 +7,4 @@ steps:
   commands:
     - pip install -r requirements.txt
     - python3 test/test.py
+    - python3 test/conftest.py
