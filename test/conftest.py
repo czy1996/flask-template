@@ -1,9 +1,13 @@
 import pytest
+import os
+import sys
 
 from mongoengine import connect
 
 from app import create_app, config
 from app.models import Todo
+
+sys.path.append(os.path.dirname(__file__))
 
 
 @pytest.fixture
