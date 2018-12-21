@@ -1,6 +1,5 @@
 import os
 
-from . import config
 from .models import db, Todo
 
 from flask import Flask, render_template
@@ -10,10 +9,12 @@ def create_app(**config_overrides):
     app = Flask(__name__)
 
     app_env = os.environ.get('APP_ENV')
+
+    # 这里不能使用相对导入
     config_object = {
-        'Production': 'config.ProductionConfig',
-        'Development': 'config.DevelopmentConfig',
-        'Testing': 'config.TestingConfig',
+        'Production': 'app.config.ProductionConfig',
+        'Development': 'app.config.DevelopmentConfig',
+        'Testing': 'app.config.TestingConfig',
     }
     if app_env:
         app.config.from_object(config_object.get(app_env, 'config.Config'))
