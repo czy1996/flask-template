@@ -11,5 +11,5 @@ steps:
     - python3 -m pytest
 
 services:
-  - name: database
+  - name: mongo
     image: mongo:4-xenial
