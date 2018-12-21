@@ -6,16 +6,19 @@ from .models import db, Todo
 from flask import Flask, render_template
 
 
-def create_app():
+def create_app(**config_overrides):
     app = Flask(__name__)
 
     app_env = os.environ.get('APP_ENV')
     config_object = {
         'Production': 'config.ProductionConfig',
         'Development': 'config.DevelopmentConfig',
+        'Testing': 'config.TestingConfig',
     }
     if app_env:
         app.config.from_object(config_object.get(app_env, 'config.Config'))
+
+    app.config.update(**config_overrides)
 
     db.init_app(app)
 
