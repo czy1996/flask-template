@@ -1,11 +1,22 @@
 import pytest
 
-from app import create_app
+from mongoengine import connect
+
+from app import create_app, config
+from app.models import Todo
 
 
 @pytest.fixture
 def app():
-    yield create_app()
+    app = create_app()
+    app.config.from_object('app.config.TestingConfig')
+
+    Todo(title='test todo').save()
+    yield app
+
+    db, host = config.TestingConfig.MONGODB_SETTINGS['db'], config.TestingConfig.MONGODB_SETTINGS['host']
+
+    connect(db=db, host=host).drop_database(db)
 
 
 @pytest.fixture

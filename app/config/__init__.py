@@ -18,3 +18,8 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+    MONGODB_SETTINGS = {
+        'db': 'testing',
+        'host': 'mongo',
+        'port': 27017,
+    }
