@@ -4,6 +4,12 @@ name: default
 steps:
 - name: test
   image: python:3.6.7-alpine3.8
+  environment:
+    APP_ENV: Testing
   commands:
-    - pip install -r requirements.txt
+    - pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
     - python3 -m pytest
+
+services:
+  - name: mongo
+    image: mongo:4-xenial

@@ -14,8 +14,12 @@ services:
 
   mongodb:
     image: mongo:4-xenial
+
+    # 开发期间开放端口方便调试
+    ports:
+      - 27017:27017
     volumes:
-      - mongo-data:/data/db
+      - mongo-data:/data
 
 volumes:
   mongo-data:
