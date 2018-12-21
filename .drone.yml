@@ -7,7 +7,7 @@ steps:
   environment:
     APP_ENV: Testing
   commands:
-    - pip -i https://mirrors.aliyun.com/pypi/simple/ install -r requirements.txt
+    - pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
     - python3 -m pytest
 
 services:
