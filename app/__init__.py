@@ -25,7 +25,12 @@ def create_app(**config_overrides):
 
     @app.route('/')
     def hello_world():
+        Todo(title='new').save()
         return render_template('index.html', todos=Todo.objects)
+
+    @app.route('/hello')
+    def hello_page():
+        return 'Hello page edited 2'
 
     return app
 

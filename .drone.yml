@@ -2,13 +2,30 @@ kind: pipeline
 name: default
 
 steps:
-- name: test
-  image: python:3.6.7-alpine3.8
-  environment:
-    APP_ENV: Testing
-  commands:
-    - pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
-    - python3 -m pytest
+  - name: test
+    image: python:3.6.7-alpine3.8
+    environment:
+      APP_ENV: Testing
+    commands:
+      - pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
+      - python3 -m pytest
+
+  - name: deploy
+    image: appleboy/drone-ssh
+    settings:
+      host: 101.132.32.187
+      username: root
+      ssh_key:
+        from_secret: ssh_key
+      port: 22
+      script:
+        - cd /var/www/flask-template
+        - git pull
+        - sudo sh reload.sh
+    # 只有合并到主干的时候才触发部署
+    when:
+      branch:
+      - master
 
 services:
   - name: mongo
