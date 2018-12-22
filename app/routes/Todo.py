@@ -11,5 +11,5 @@ def add():
         'status_code': 0,
     }
     todos = Todo.objects
-    result['data'] = [todo.to_json(use_db_field=False) for todo in todos]
+    result['data'] = [todo.to_dict() for todo in todos]
     return jsonify(result)
