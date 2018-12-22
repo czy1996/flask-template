@@ -24,13 +24,13 @@ Testing
 Production
 ```
 
-Pycharm 的运行可以添加环境变量，本地测试可以使用 virtualenv
+Pycharm 的运行可以添加环境变量，本地测试可以使用 virtualenv, 用的是开发数据库
 
 ```shell
-$ pip install -r requirements.txt
-$ pip install -e .
+(venv)$ pip install -r requirements.txt
+(venv)$ pip install -e .
 
-$ pytest
+(venv)$ pytest
 ```
 
 CI 测试在 .drone.yml 中配置了一个数据库
