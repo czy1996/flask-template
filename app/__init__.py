@@ -30,6 +30,7 @@ def create_app(**config_overrides):
 
     @app.route('/hello')
     def hello_page():
+        app.logger.debug("hello viewed")
         return 'Hello page edited 2'
 
     return app
