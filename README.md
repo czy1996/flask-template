@@ -8,7 +8,7 @@ flask 项目模板，使用docker compose
 - [x] 配置文件支持
 - [x] 数据库及其配置文件
 - [x] 部署流程编写/线上 compose 环境
-- [ ] logger 配置
+- [x] logger 配置
 - [ ] sample todo 
 
 ## Features
