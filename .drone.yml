@@ -19,7 +19,9 @@ steps:
         from_secret: ssh_key
       port: 22
       script:
-        - echo test ssh
+        - cd /var/www/flask-template
+        - git pull
+        - sudo sh reload.sh
 
 services:
   - name: mongo
