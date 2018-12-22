@@ -22,6 +22,10 @@ steps:
         - cd /var/www/flask-template
         - git pull
         - sudo sh reload.sh
+      # 只有合并到主干的时候才触发部署
+      when:
+        branch:
+        - master
 
 services:
   - name: mongo
