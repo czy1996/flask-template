@@ -10,7 +10,7 @@ steps:
       - pip install -i https://mirrors.aliyun.com/pypi/simple/ -r requirements.txt
       - python3 -m pytest
 
-  - name: publish
+  - name: deploy
     image: appleboy/drone-ssh
     settings:
       host: 101.132.32.187
