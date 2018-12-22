@@ -2,4 +2,4 @@
 docker-compose -f docker-compose.yml build pyweb
 
 # 这里还是根据官方文档的建议来吧
-docker-compose up --no-deps -d web
+docker-compose up --no-deps -d pyweb
