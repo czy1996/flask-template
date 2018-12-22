@@ -13,6 +13,7 @@ services:
       - .:/code
     depends_on:
       - mongodb
+    restart: always
 
   mongodb:
     image: mongo:4-xenial
