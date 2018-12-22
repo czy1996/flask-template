@@ -5,6 +5,11 @@ class Config(object):
 
 class ProductionConfig(Config):
     pass
+    MONGODB_SETTINGS = {
+        'db': 'Todo',
+        'host': 'mongodb',
+        'port': 27017
+    }
 
 
 class DevelopmentConfig(Config):
