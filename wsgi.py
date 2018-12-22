@@ -18,4 +18,4 @@ gunicorn_logger = logging.getLogger('gunicorn.error')
 app_.logger.handlers = gunicorn_logger.handlers
 app_.logger.setLevel(gunicorn_logger.level)
 
-application = app.create_app()
+application = app_
