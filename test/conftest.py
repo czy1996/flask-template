@@ -15,6 +15,7 @@ def app():
 
     db, host = config.TestingConfig.MONGODB_SETTINGS['db'], config.TestingConfig.MONGODB_SETTINGS['host']
     connect(db=db, host=host).drop_database(db)
+    connect(db='test', host=host).drop_database('test')
 
 
 @pytest.fixture
