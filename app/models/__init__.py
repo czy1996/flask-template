@@ -24,3 +24,4 @@ class BaseDocument(db.Document):
 class Todo(BaseDocument):
     counter = db.SequenceField()
     title = db.StringField()
+    is_deleted = db.BooleanField(default=False, required=True)
