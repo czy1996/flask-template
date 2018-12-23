@@ -4,7 +4,7 @@ from .models import db, Todo
 
 from flask import Flask, render_template
 
-from routes.Todo import main as routes_todo
+from .routes.Todo import main as routes_todo
 
 
 def create_app(**config_overrides):

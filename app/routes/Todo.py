@@ -1,6 +1,6 @@
 from flask import Blueprint, current_app, jsonify
 
-from models import Todo
+from app.models import Todo
 
 main = Blueprint('todo', __name__)
 
