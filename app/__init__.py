@@ -4,6 +4,8 @@ from .models import db, Todo
 
 from flask import Flask, render_template
 
+from .routes.Todo import main as routes_todo
+
 
 def create_app(**config_overrides):
     app = Flask(__name__)
@@ -22,6 +24,8 @@ def create_app(**config_overrides):
     app.config.update(**config_overrides)
 
     db.init_app(app)
+
+    app.register_blueprint(routes_todo, url_prefix='/todo')
 
     @app.route('/')
     def hello_world():

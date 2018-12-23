@@ -35,6 +35,12 @@ Pycharm 的运行可以添加环境变量，本地测试可以使用 virtualenv,
 (venv)$ pytest
 ```
 
+因为将整个包本地安装，所以到处安装包的时候应该这么做
+
+```shell
+(venv)$ pip freeze --exclude-editable > requirements.txt
+```
+
 CI 测试在 .drone.yml 中配置了一个数据库
 
 ## 配置步骤
