@@ -42,5 +42,4 @@ def todo(todo_id):
         todo.save()
     else:
         todo.delete()
-
     return jsonify(response)

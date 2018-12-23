@@ -5,10 +5,15 @@
     <title>Hello World</title>
 </head>
 <body>
-    Hello World from container! Edited.
+Hello World from container! Edited.
+<div id="todo-list">
     {% for todo in todos %}
-        <div>{{ todo.title }}</div>
+        <div class="todo-cell" data-id="{{ todo.counter }}">{{ todo.title }}
+            <button class="button-delete">x</button>
+        </div>
     {% endfor %}
+</div>
 
+<script src="/static/js/main.js"></script>
 </body>
 </html>
