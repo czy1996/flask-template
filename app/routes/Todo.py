@@ -7,13 +7,19 @@ from ..models import Todo
 main = Blueprint('todo', __name__)
 
 
-@main.route('/')
+@main.route('/', methods=['GET', 'POST'], strict_slashes=False)
 def add():
     result = {
         'status_code': 0,
     }
-    todos = Todo.objects(is_deleted=False)  # 每次写很麻烦，目前还没有更好的办法
-    result['data'] = [todo.to_dict() for todo in todos]
+
+    if request.method == 'GET':
+        todos = Todo.all()  # 每次写很麻烦，目前还没有更好的办法
+        result['data'] = [todo.to_dict() for todo in todos]
+    else:
+        title = request.json.get('title', 'default')
+        Todo(title=title).save()
+
     return jsonify(result)
 
 
@@ -23,7 +29,7 @@ def todo(todo_id):
         'status_code': 0,
     }
 
-    todo = Todo.objects(counter=todo_id, is_deleted=False).first()
+    todo = Todo.first(counter=todo_id)
 
     if not todo:
         response['status_code'] = 1

@@ -19,10 +19,26 @@ def test_get_by_id_none(client):
     assert r['status_code'] == 1
 
 
-def test_add_one(client):
-    r = client.post('/todo/1', data=dict(title='update'), content_type='application/json').json
+def test_update_one(client):
+    r = client.post('/todo/1', data=json.dumps(dict(title='update')), content_type='application/json').json
     assert r['status_code'] == 0
+    r = client.get('/todo/1').json
+    assert r['data']['title'] == 'update'
+
+
+def test_add_one(client):
+    r = client.post(
+        '/todo',
+        data=json.dumps(dict(title='add at test')),
+        content_type='application/json'
+    ).json
+    assert r['status_code'] == 0
+    r = client.get('/todo/3').json
+    assert r['data']['title'] == 'add at test'
+
 
 def test_delete_success(client):
     r = client.delete('/todo/2').json
     assert r['status_code'] == 0
+    r = client.get('/todo/2').json
+    assert r['status_code'] == 1

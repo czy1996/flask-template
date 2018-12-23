@@ -20,6 +20,21 @@ class BaseDocument(db.Document):
         d['id'] = id_
         return d
 
+    @classmethod
+    def all(cls, **kwargs):
+        return cls.objects(is_deleted=False, **kwargs)
+
+    @classmethod
+    def first(cls, **kwargs):
+        return cls.all(**kwargs).first()
+
+    # def delete(self, hard_delete=False, **kwargs):
+    #     if hard_delete:
+    #         super().delete()
+    #     else:
+    #         self.is_deleted = True
+    #         self.save()
+
 
 class Todo(BaseDocument):
     counter = db.SequenceField()
