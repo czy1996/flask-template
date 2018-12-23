@@ -11,7 +11,6 @@ class BaseDocument(db.Document):
     }
 
     def to_dict(self):
-        print(self.__dict__)
         # use_db_fields 意义不明
         d = json.loads(self.to_json())
         id_ = d.pop('_id')['$oid']
