@@ -3,6 +3,11 @@
 
 flask 项目模板，使用docker compose
 
+## Features
+
+- docker-compose
+- Drone CI
+
 ## Todo
 
 - [x] 配置文件支持
@@ -32,10 +37,6 @@ web 开发没有银弹，这份方案肯定不会适用于所有情况
 自己造轮子还是用别人的扩展，这两者如何权衡？本项目的目的，解决需求是第一位的，所以会尽量挑选好的扩展。  
 对于『套路』性的需求，尽量探索成熟的解决方案。
 
-## Features
-
-- docker-compose
-- Drone CI
 
 ## 说明
 
