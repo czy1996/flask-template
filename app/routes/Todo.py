@@ -18,7 +18,8 @@ def add():
         result['data'] = [todo.to_dict() for todo in todos]
     else:
         title = request.json.get('title', 'default')
-        Todo(title=title).save()
+        todo = Todo(title=title).save()
+        result['data'] = todo.to_dict()
 
     return jsonify(result)
 

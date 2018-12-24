@@ -6,14 +6,13 @@
 </head>
 <body>
 Hello World from container! Edited.
-<div id="todo-list">
-    {% for todo in todos %}
-        <div class="todo-cell" data-id="{{ todo.counter }}">{{ todo.title }}
-            <button class="button-delete">x</button>
-        </div>
-    {% endfor %}
+<div>
+    <input id='id-input-todo'>
+    <button id='id-button-add'>+</button>
+    <div id="todo-list"></div>
 </div>
 
+<script src="/static/js/todo.js"></script>
 <script src="/static/js/main.js"></script>
 </body>
 </html>
