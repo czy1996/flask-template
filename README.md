@@ -10,8 +10,9 @@ flask 项目模板，使用docker compose
 - [x] 部署流程编写/线上 compose 环境
 - [x] logger 配置
 - [ ] sample todo 
-- [ ] json 数据验证
-- [ ] 响应钩子 
+- [ ] json 数据验证, 错误自动返回
+- [ ] 认证管理
+- [ ] ~~响应钩子~~ 我也忘了这tm说的是啥 
 
 ## Features
 
