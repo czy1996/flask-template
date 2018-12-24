@@ -34,6 +34,3 @@ class BaseDocument(db.Document):
         else:
             self.is_deleted = True
             self.save()
-
-
-
