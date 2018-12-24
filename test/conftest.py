@@ -3,7 +3,7 @@ import pytest
 from mongoengine import connect
 
 from app import create_app, config
-from app.models import Todo
+from app.models.Todo import Todo
 
 
 @pytest.fixture
