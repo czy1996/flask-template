@@ -2,7 +2,7 @@ from flask import Blueprint, current_app, jsonify, request
 
 # 这么写是相对导入，虽然可以，但是感觉有毒
 # 等价于 from app.models
-from ..models.Todo import Todo
+from ..models.Todo import Todo, TodoSchema
 
 main = Blueprint('todo', __name__)
 

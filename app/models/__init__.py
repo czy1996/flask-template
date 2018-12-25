@@ -14,12 +14,7 @@ class BaseDocument(db.Document):
 
     def to_dict(self):
         # use_db_fields 意义不明
-        d = json.loads(self.to_json())
-        id_ = d.pop('_id')['$oid']
-        d['oid'] = id_
-
-        id_ = d.pop('counter')
-        d['id'] = id_
+        d = self._schema.dump(self)
         return d
 
     @classmethod
@@ -36,3 +31,10 @@ class BaseDocument(db.Document):
         else:
             self.is_deleted = True
             self.save()
+
+
+class BaseSchema(ma.Schema):
+    # counter 维护了自增的整数 id
+    # 希望 dump 出的 json ，id 其实是 counter 值
+    # load 是什么行为？
+    id = ma.Integer(attribute='counter', dump_only=True)
