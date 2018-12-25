@@ -38,6 +38,30 @@ web 开发没有银弹，这份方案肯定不会适用于所有情况
 对于『套路』性的需求，尽量探索成熟的解决方案。
 
 
+## Notes
+
+### 数据校验
+
+我想实现的功能是，marshmallow 能够自动对 client 发过来的 json 进行校验，如果校验不通过，返回错误信息。
+这样势必需要对每个请求定义一个合格的请求数据？~~因为从文档上来看，`schema.load`一定要所有的数据~~
+
+marshmallow 主要用途是序列化和反序列化，是否真的需要这么重型的库？
+
+再仔细分析一下，可能会遇到什么错误
+
+- payload 一定是 JSON
+- 字段缺失，对于每个 view，~~具体情况其实不一样~~。这只是意淫，其实想半天只有下面这种
+
+```json
+{
+  "name": "fuck", // required,  
+  "phone number": "shit", // required
+  "address": , // optional
+}
+```
+
+可选字段缺失不报错，必选字段缺失一定报错
+
 ## 说明
 
 使用三套配置文件，根据 `APP_ENV` 环境变量进行切换
@@ -48,7 +72,7 @@ Testing
 Production
 ```
 
-Pycharm 的运行可以添加环境变量，本地测试可以使用 virtualenv, 用的是开发数据库
+Pycharm 的运行可以添加环境变量，本地测试可以使用 virtualenv, 用的是开发数据库, 不加这个环境变量
 
 ```shell
 (venv)$ pip install -r requirements.txt
@@ -57,7 +81,7 @@ Pycharm 的运行可以添加环境变量，本地测试可以使用 virtualenv,
 (venv)$ pytest
 ```
 
-因为将整个包本地安装，所以到处安装包的时候应该这么做, 防止把 app 也写进去了
+因为将整个包本地安装，所以导出安装包的时候应该这么做, 防止把 app 也写进去了
 
 ```shell
 (venv)$ pip freeze --exclude-editable > requirements.txt
