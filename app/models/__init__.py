@@ -1,3 +1,5 @@
+from flask import current_app as app
+
 from flask_mongoengine import MongoEngine
 from flask_marshmallow import Marshmallow
 
@@ -29,6 +31,11 @@ class BaseDocument(db.Document):
         else:
             self.is_deleted = True
             self.save()
+
+    def update(self, **kwargs):
+        app.logger.debug('update called')
+        valid = self._schema.load(kwargs, partial=True)  # 啥也不改，这种行为是允许的，但是遇到没见过的依然会报错
+        return super().update(**valid)
 
     @classmethod
     def new(cls, data):

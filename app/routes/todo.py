@@ -53,6 +53,7 @@ def get_one(todo_id):
 
 
 @main.route('/<int:todo_id>', methods=['POST'])
+@validate_post
 def update_one(todo_id):
     response = {
         'status_code': 0,
@@ -60,8 +61,7 @@ def update_one(todo_id):
 
     # 待重构
     todo = Todo.first(counter=todo_id)
-    todo.title = request.json['title']
-    todo.save()
+    todo.update(**request.json)
     response['data'] = todo.to_dict()
     return jsonify(response)
 
