@@ -16,6 +16,7 @@ flask 项目模板，使用docker compose
 - [x] logger 配置
 - [ ] sample todo 
 - [ ] json 数据验证, 错误自动返回 flask-marshmallow
+- [ ] 分页逻辑
 - [ ] 认证管理 flask-httpauth
 - [ ] ~~响应钩子~~ 我也忘了这tm说的是啥
 
