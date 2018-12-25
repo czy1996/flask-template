@@ -4,28 +4,39 @@ from flask import Blueprint, current_app, jsonify, request
 # 等价于 from app.models
 from ..models.Todo import Todo, TodoSchema
 
+from .utils import validate_post
+
 main = Blueprint('todo', __name__)
 
 
-@main.route('/', methods=['GET', 'POST'], strict_slashes=False)
-def add():
+@main.route('/', methods=['GET'], strict_slashes=False)
+def get_collection():
     result = {
         'status_code': 0,
     }
 
-    if request.method == 'GET':
-        todos = Todo.all()  # 每次写很麻烦，目前还没有更好的办法
-        result['data'] = [todo.to_dict() for todo in todos]
-    else:
-        title = request.json.get('title', 'default')
-        todo = Todo(title=title).save()
-        result['data'] = todo.to_dict()
+    # 我觉得这种程度的封装就已经够了
+    # 但可否进一步封装成 .jsonify(todos, many=True), 自动附上 status_code
+    # 对于需要 filter 的 api，后续可能还要加一层装饰器校验/清洗，使这里的 args 能够直接用
+    todos = Todo.all()  # 每次写很麻烦，目前还没有更好的办法
+    result['data'] = [todo.to_dict() for todo in todos]
 
     return jsonify(result)
 
 
-@main.route('/<int:todo_id>', methods=['GET', 'POST', 'DELETE'])
-def todo(todo_id):
+@main.route('/', methods=['POST'], strict_slashes=False)
+@validate_post
+def add_one():
+    result = {
+        'status_code': 0,
+    }  # 什么时候把这段也抽象出去
+    todo = Todo.new(request.json)
+    result['data'] = todo.to_dict()
+    return jsonify(result)
+
+
+@main.route('/<int:todo_id>', methods=['GET'])
+def get_one(todo_id):
     response = {
         'status_code': 0,
     }
@@ -34,13 +45,34 @@ def todo(todo_id):
 
     if not todo:
         response['status_code'] = 1
-        return jsonify(response)
+        return jsonify(response)  # 这段怎么抽出去？
 
-    if request.method == 'GET':
-        response['data'] = todo.to_dict()
-    elif request.method == 'POST':
-        todo.title = request.json['title']
-        todo.save()
-    else:
-        todo.delete()
+    response['data'] = todo.to_dict()
+
+    return jsonify(response)
+
+
+@main.route('/<int:todo_id>', methods=['POST'])
+def update_one(todo_id):
+    response = {
+        'status_code': 0,
+    }
+
+    # 待重构
+    todo = Todo.first(counter=todo_id)
+    todo.title = request.json['title']
+    todo.save()
+    response['data'] = todo.to_dict()
+    return jsonify(response)
+
+
+@main.route('/<int:todo_id>', methods=['DELETE'])
+def delete_one(todo_id):
+    response = {
+        'status_code': 0,
+    }
+
+    # 待重构
+    todo = Todo.first(counter=todo_id)
+    todo.delete()
     return jsonify(response)

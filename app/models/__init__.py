@@ -1,5 +1,3 @@
-import json
-
 from flask_mongoengine import MongoEngine
 from flask_marshmallow import Marshmallow
 
@@ -31,6 +29,11 @@ class BaseDocument(db.Document):
         else:
             self.is_deleted = True
             self.save()
+
+    @classmethod
+    def new(cls, data):
+        valid = cls._schema.load(data)
+        return cls(**valid).save()
 
 
 class BaseSchema(ma.Schema):
