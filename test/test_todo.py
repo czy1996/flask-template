@@ -1,7 +1,7 @@
 import json
 
 
-def test_all(client):
+def test_get_collection(client):
     r = client.get('/todo/').json
     assert 0 == r['status_code']
     assert 'test todo' == r['data'][0]['title']
@@ -24,6 +24,16 @@ def test_update_one(client):
     assert r['status_code'] == 0
     r = client.get('/todo/1').json
     assert r['data']['title'] == 'update'
+
+
+def test_add_one_missing_field(client):
+    r = client.post('/todo', data=json.dumps(dict(titl='')), content_type='application/json')
+    assert b'Missing data for required field.' in r.data
+
+
+def test_update_one_unknown_field(client):
+    r = client.post('/todo/1', data=json.dumps(dict(tit='')), content_type='application/json')
+    assert b'Unknown field.' in r.data
 
 
 def test_add_one(client):

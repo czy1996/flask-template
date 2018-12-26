@@ -1,10 +1,11 @@
 import os
 
-from .models import db, Todo
+from .models import db, ma
+from .models.Todo import Todo
 
 from flask import Flask, render_template
 
-from .routes.Todo import main as routes_todo
+from .routes.todo import main as routes_todo
 
 
 def create_app(**config_overrides):
@@ -24,6 +25,7 @@ def create_app(**config_overrides):
     app.config.update(**config_overrides)
 
     db.init_app(app)
+    ma.init_app(app)
 
     app.register_blueprint(routes_todo, url_prefix='/todo')
 
