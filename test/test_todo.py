@@ -1,11 +1,19 @@
 import json
 
 
-def test_get_collection(client):
+def test_get_collection_default(client):
     r = client.get('/todo/').json
     assert 0 == r['status_code']
     assert 'test todo1' == r['data']['items'][0]['title']
     assert 1 == r['data']['items'][0]['id']
+    assert r['data']['_meta']['current_page'] == 1
+    assert r['data']['_meta']['next_page'] == 2
+    assert len(r['data']['items']) == 10
+
+
+def test_get_collections_page_2(client):
+    r = client.get('/todo?page=2&per_page=10').json
+    assert len(r['data']['items']) == 10
 
 
 def test_get_by_id_ok(client):

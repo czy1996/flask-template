@@ -43,6 +43,8 @@ class _QuerySet(BaseQuerySet):
             'items': [item.to_dict() for item in pagination.items],  # 想交给 schmea(many=True) 生成，但目前没有很好的办法
             '_meta': {
                 'current_page': pagination.page,
+                'next_page': pagination.next_num,
+                'prev_page': pagination.prev_num,
                 'per_page': pagination.per_page,
                 'total_pages': pagination.pages,
                 'total_items': pagination.total,
