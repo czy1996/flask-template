@@ -66,7 +66,7 @@ const insertTodo = todo => {
 
 const loadTodos = () => {
     apiTodoAll(r => {
-        let todos = JSON.parse(r).data;
+        let todos = JSON.parse(r).data.items;
         for (let todo of todos) {
             insertTodo(todo);
         }
