@@ -40,7 +40,7 @@ class _QuerySet(BaseQuerySet):
     def to_collection_dict(self, page=1, per_page=10, endpoint=None):
         pagination = self.paginate(page, per_page)
         data = {
-            'items': [item.to_dict() for item in pagination.items],
+            'items': [item.to_dict() for item in pagination.items],  # 想交给 schmea(many=True) 生成，但目前没有很好的办法
             '_meta': {
                 'current_page': pagination.page,
                 'per_page': pagination.per_page,
@@ -73,7 +73,12 @@ class BaseDocument(db.Document):
 
     def to_dict(self):
         # use_db_fields 意义不明
-        d = self._schema.dump(self)
+        d = self.schema().dump(self)
+        return d
+
+    def to_collection_dict(self, collection):
+        # 卵子用都没有
+        d = self.schema(many=True).dump(collection)
         return d
 
     @classmethod
@@ -93,7 +98,7 @@ class BaseDocument(db.Document):
 
     def update(self, **kwargs):
         app.logger.debug('update called')
-        valid = self._schema.load(kwargs, partial=True)  # 啥也不改，这种行为是允许的，但是遇到没见过的依然会报错
+        valid = self.schema().load(kwargs, partial=True)  # 啥也不改，这种行为是允许的，但是遇到没见过的依然会报错
         return super().update(**valid)
 
     def clean(self):
@@ -102,7 +107,7 @@ class BaseDocument(db.Document):
 
     @classmethod
     def new(cls, data):
-        valid = cls._schema.load(data)
+        valid = cls.schema().load(data)
         return cls(**valid).save()
 
 
