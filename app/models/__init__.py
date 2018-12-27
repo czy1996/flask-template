@@ -1,6 +1,7 @@
 import datetime
 
 from flask import current_app as app
+from flask import url_for
 
 from flask_mongoengine import MongoEngine, BaseQuerySet
 from flask_marshmallow import Marshmallow
@@ -35,6 +36,24 @@ class _QuerySet(BaseQuerySet):
             kwargs['is_deleted'] = False
 
         return super().__call__(*args, **kwargs)
+
+    def to_collection_dict(self, page=1, per_page=10, endpoint=None):
+        pagination = self.paginate(page, per_page)
+        data = {
+            'items': [item.to_dict() for item in pagination.items],
+            '_meta': {
+                'current_page': pagination.page,
+                'per_page': pagination.per_page,
+                'total_pages': pagination.pages,
+                'total_items': pagination.total,
+            },
+            '_link': {
+                'self': url_for(endpoint, page=page, per_page=per_page),
+                'next': url_for(endpoint, page=page, per_page=per_page) if pagination.has_next else None,
+                'prev': url_for(endpoint, page=page, per_page=per_page) if pagination.has_prev else None
+            } if endpoint else None
+        }
+        return data
 
 
 class BaseDocument(db.Document):

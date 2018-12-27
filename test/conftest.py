@@ -10,8 +10,8 @@ from app.models.Todo import Todo
 def app():
     app = create_app()
 
-    Todo(title='test todo').save()
-    Todo(title='test todo2').save()
+    for i in range(1, 22):
+        Todo(title='test todo' + str(i)).save()
     yield app  # 这行相当于隔开 setUp 和 tearDown
 
     db, host = config.TestingConfig.MONGODB_SETTINGS['db'], config.TestingConfig.MONGODB_SETTINGS['host']

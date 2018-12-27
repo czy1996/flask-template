@@ -4,8 +4,8 @@ import json
 def test_get_collection(client):
     r = client.get('/todo/').json
     assert 0 == r['status_code']
-    assert 'test todo' == r['data'][0]['title']
-    assert 1 == r['data'][0]['id']
+    assert 'test todo1' == r['data']['items'][0]['title']
+    assert 1 == r['data']['items'][0]['id']
 
 
 def test_get_by_id_ok(client):
@@ -15,7 +15,7 @@ def test_get_by_id_ok(client):
 
 
 def test_get_by_id_none(client):
-    r = client.get('/todo/3').json
+    r = client.get('/todo/31').json
     assert r['status_code'] == 1
 
 
@@ -43,7 +43,7 @@ def test_add_one(client):
         content_type='application/json'
     ).json
     assert r['status_code'] == 0
-    r = client.get('/todo/3').json
+    r = client.get('/todo/' + str(r['data']['id'])).json
     assert r['data']['title'] == 'add at test'
 
 
