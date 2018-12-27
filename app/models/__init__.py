@@ -51,8 +51,8 @@ class _QuerySet(BaseQuerySet):
             },
             '_link': {
                 'self': url_for(endpoint, page=page, per_page=per_page),
-                'next': url_for(endpoint, page=page, per_page=per_page) if pagination.has_next else None,
-                'prev': url_for(endpoint, page=page, per_page=per_page) if pagination.has_prev else None
+                'next': url_for(endpoint, page=pagination.next_num, per_page=per_page) if pagination.has_next else None,
+                'prev': url_for(endpoint, page=pagination.prev_num, per_page=per_page) if pagination.has_prev else None
             } if endpoint else None
         }
         return data

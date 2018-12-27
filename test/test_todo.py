@@ -13,7 +13,11 @@ def test_get_collection_default(client):
 
 def test_get_collections_page_2(client):
     r = client.get('/todo?page=2&per_page=10').json
+    assert r['data']['_meta']['prev_page'] == 1
     assert len(r['data']['items']) == 10
+    # 测试返回的 _link 是否合法
+    r = client.get(r['data']['_link']['prev']).json
+    assert r['data']['_meta']['current_page'] == 1
 
 
 def test_get_by_id_ok(client):
