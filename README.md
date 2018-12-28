@@ -14,11 +14,12 @@ flask 项目模板，使用docker compose
 - [x] 数据库及其配置文件
 - [x] 部署流程编写/线上 compose 环境
 - [x] logger 配置
-- [ ] sample todo 
-- [ ] json 数据验证, 错误自动返回 flask-marshmallow
-- [ ] 分页逻辑
+- [x] sample todo 
+- [x] json 数据验证, 错误自动返回 flask-marshmallow
+- [x] 分页逻辑
 - [ ] 认证管理 flask-httpauth
 - [ ] ~~响应钩子~~ 我也忘了这tm说的是啥
+- [ ] 数据库迁移 这个很不好搞啊
 
 
 ## 目的
