@@ -20,7 +20,9 @@ def get_collection():
     # 对于需要 filter 的 api，后续可能还要加一层装饰器校验/清洗，使这里的 args 能够直接用
     page = int(request.args.get('page', 1))
     per_page = int(request.args.get('per_page', 10))
-    result['data'] = Todo.objects.to_collection_dict(page, per_page, '.get_collection')
+    # 为什么硬要加括号呢？因为不加会吧 is_deleted=True 也包含进去
+    # TODO 这个用法设计的不好，得改
+    result['data'] = Todo.objects().to_collection_dict(page, per_page, '.get_collection')
 
     return jsonify(result)
 

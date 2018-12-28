@@ -2,6 +2,7 @@ import datetime
 
 from flask import current_app as app
 from flask import url_for
+from mongoengine import Q
 
 from flask_mongoengine import MongoEngine, BaseQuerySet
 from flask_marshmallow import Marshmallow
@@ -18,6 +19,13 @@ class _QuerySet(BaseQuerySet):
     - 一律将 id 转换成 counter 进行查询(会不会影响效率?)
     - 实现 to_collection_dict, 调用方式 类似于 User.objects(created_at__lt=asdkfasd).to_collection_dict()
     """
+
+    def __init__(self, document, collection):
+        super().__init__(document, collection)
+        # 默认查询未删除
+        # self._query_obj = Q(is_deleted=False)
+        # 会导致 bug，暂缓实现
+        pass
 
     def __call__(self, *args, include_deleted=False, **kwargs):
         # 默认检索 is_delete=False
@@ -101,6 +109,8 @@ class BaseDocument(db.Document):
     def update(self, **kwargs):
         app.logger.debug('update called')
         valid = self.schema().load(kwargs, partial=True)  # 啥也不改，这种行为是允许的，但是遇到没见过的依然会报错
+        # 自动更新修改时间
+        valid['updated_at'] = datetime.datetime.now()
         return super().update(**valid)
 
     def clean(self):
@@ -120,3 +130,4 @@ class BaseSchema(ma.Schema):
     id = ma.Integer(attribute='counter', dump_only=True)
     # 只导出不修改
     created_at = ma.DateTime(dump_only=True)
+    updated_at = ma.DateTime(dump_only=True)
