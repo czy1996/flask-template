@@ -18,8 +18,9 @@ def get_collection():
     # 我觉得这种程度的封装就已经够了
     # 但可否进一步封装成 .jsonify(todos, many=True), 自动附上 status_code
     # 对于需要 filter 的 api，后续可能还要加一层装饰器校验/清洗，使这里的 args 能够直接用
-    todos = Todo.all()  # 每次写很麻烦，目前还没有更好的办法
-    result['data'] = [todo.to_dict() for todo in todos]
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 10))
+    result['data'] = Todo.objects.to_collection_dict(page, per_page, '.get_collection')
 
     return jsonify(result)
 
